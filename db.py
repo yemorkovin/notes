@@ -9,17 +9,23 @@ class DB:
             create table if not exists notes(
                 id integer primary key autoincrement,
                 title text not null,
-               t nu content text not null,
+                content text not null,
                 created_at text noll,
                 updated_at text not null
             )
         ''')
         self.conn.commit()
 
-
     def select_notes(self):
         self.cursor.execute('select * from notes order by updated_at desc')
         return self.cursor.fetchall()
+
+    @staticmethod
+    def select_notes_():
+        conn = sqlite3.connect(DB_NAME)
+        cursor = conn.cursor()
+        cursor.execute('select * from notes order by updated_at desc')
+        return cursor.fetchall()
 
     def select_note_by_id(self, id_note):
         self.cursor.execute('select * from notes where id = ?', (id_note,))
@@ -32,3 +38,10 @@ class DB:
     def edit_notes(self, title, content, now, id_note):
         self.cursor.execute('update notes set title = ?, content = ?, updated_at = ? where id = ?', (title,content,now,id_note))
         self.conn.commit()
+
+
+    def delete_note(self, id_note):
+        self.cursor.execute('delete from notes where id = ?',
+                            (id_note,))
+        self.conn.commit()
+
