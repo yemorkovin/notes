@@ -182,7 +182,10 @@ class NotesApp(Widgets):
             data.append(r)
         print(data)
     def import_to_mysql(self):
-        pass
+        mysql = Mysql('config_db.json')
+        if mysql.import_notes():
+            tk.messagebox.showinfo('Success', 'success')
+            self.load_notes()
 a = tk.Tk()
 note = NotesApp(a)
 a.mainloop()

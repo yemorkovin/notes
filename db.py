@@ -45,3 +45,7 @@ class DB:
                             (id_note,))
         self.conn.commit()
 
+    def delete_notes(self):
+        self.cursor.execute('delete from notes where id > 0')
+        self.conn.commit()
+

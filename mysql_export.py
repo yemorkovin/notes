@@ -73,5 +73,17 @@ class Mysql:
         except:
             return False
 
+    def import_notes(self):
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute('select * from notes')
+            notes_mysql = cursor.fetchall()
+            sqlite_db = DB()
+            sqlite_db.delete_notes()
+            for i in notes_mysql:
+                sqlite_db.add_notes(i[1], i[2], i[3])
+        except:
+            return False
+        return True
 
 
